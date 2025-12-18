@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Kyrch\LaravelRestrictions\Pivots;
+namespace Kyrch\Restriction\Pivots;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Support\Carbon;

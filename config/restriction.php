@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Kyrch\LaravelRestrictions\Models\Restriction;
-use Kyrch\LaravelRestrictions\Models\Sanction;
-use Kyrch\LaravelRestrictions\Pivots\ModelRestriction;
-use Kyrch\LaravelRestrictions\Pivots\ModelSanction;
+use Kyrch\Restriction\Models\Restriction;
+use Kyrch\Restriction\Models\Sanction;
+use Kyrch\Restriction\Pivots\ModelRestriction;
+use Kyrch\Restriction\Pivots\ModelSanction;
 
 return [
     'events_enabled' => true,

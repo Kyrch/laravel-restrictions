@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Kyrch\LaravelRestrictions\Events;
+namespace Kyrch\Restriction\Events;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Events\Dispatchable;

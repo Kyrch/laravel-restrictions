@@ -1,5 +1,5 @@
 <?php
 
-use Kyrch\LaravelRestrictions\Tests\TestCase;
+use Kyrch\Restriction\Tests\TestCase;
 
 uses(TestCase::class)->in(__DIR__);

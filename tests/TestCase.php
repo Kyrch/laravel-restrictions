@@ -1,9 +1,9 @@
 <?php
 
-namespace Kyrch\LaravelRestrictions\Tests;
+namespace Kyrch\Restriction\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Kyrch\LaravelRestrictions\LaravelRestrictionsServiceProvider;
+use Kyrch\Restriction\RestrictionServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -13,14 +13,14 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Kyrch\\LaravelRestrictions\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'Kyrch\\Restriction\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            LaravelRestrictionsServiceProvider::class,
+            RestrictionServiceProvider::class,
         ];
     }
 

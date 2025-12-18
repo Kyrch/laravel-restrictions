@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Kyrch\LaravelRestrictions\Traits;
+namespace Kyrch\Restriction\Traits;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Collection;
@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use InvalidArgumentException;
-use Kyrch\LaravelRestrictions\Events\ModelRestricted;
-use Kyrch\LaravelRestrictions\Models\Restriction;
-use Kyrch\LaravelRestrictions\Models\Sanction;
+use Kyrch\Restriction\Events\ModelRestricted;
+use Kyrch\Restriction\Models\Restriction;
+use Kyrch\Restriction\Models\Sanction;
 
 /**
  * @property Collection<int, Restriction> $restrictions

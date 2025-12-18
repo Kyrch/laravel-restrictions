@@ -36,13 +36,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Kyrch\\LaravelRestrictions\\": "src/",
-            "Kyrch\\LaravelRestrictions\\Database\\Factories\\": "database/factories/"
+            "Kyrch\\Restriction\\": "src/",
+            "Kyrch\\Restriction\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Kyrch\\LaravelRestrictions\\Tests\\": "tests/",
+            "Kyrch\\Restriction\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
@@ -77,10 +77,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Kyrch\\LaravelRestrictions\\LaravelRestrictionsServiceProvider"
+                "Kyrch\\Restriction\\RestrictionServiceProvider"
             ],
             "aliases": {
-                "LaravelRestrictions": "Kyrch\\LaravelRestrictions\\Facades\\LaravelRestrictions"
+                "Restriction": "Kyrch\\Restriction\\Facades\\Restriction"
             }
         }
     },

@@ -2,16 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Kyrch\LaravelRestrictions\Models;
+namespace Kyrch\Restriction\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
+use Kyrch\Restriction\Contracts\Restriction as RestrictionContract;
 
 /**
  * @property int $id
  * @property string $name
  */
-class Restriction extends Model
+class Restriction extends Model implements RestrictionContract
 {
     /**
      * The table associated with the model.

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Kyrch\LaravelRestrictions\Traits;
+namespace Kyrch\Restriction\Traits;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
-use Kyrch\LaravelRestrictions\Events\ModelSanctioned;
-use Kyrch\LaravelRestrictions\Models\Sanction;
+use Kyrch\Restriction\Events\ModelSanctioned;
+use Kyrch\Restriction\Models\Sanction;
 use TypeError;
 
 /**

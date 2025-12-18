@@ -44,7 +44,7 @@ php artisan vendor:publish --tag="laravel-restrictions-views"
 ## Usage
 
 ```php
-$laravelRestrictions = new Kyrch\LaravelRestrictions();
+$laravelRestrictions = new Kyrch\Restriction();
 echo $laravelRestrictions->echoPhrase('Hello, kyrch!');
 ```
 

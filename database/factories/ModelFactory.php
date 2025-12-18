@@ -1,6 +1,6 @@
 <?php
 
-namespace Kyrch\LaravelRestrictions\Database\Factories;
+namespace Kyrch\Restriction\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 

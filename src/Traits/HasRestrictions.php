@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use InvalidArgumentException;
+use Kyrch\LaravelRestrictions\Events\ModelRestricted;
 use Kyrch\LaravelRestrictions\Models\Restriction;
 use Kyrch\LaravelRestrictions\Models\Sanction;
 
@@ -28,24 +30,30 @@ trait HasRestrictions
     }
 
     public function restrict(
-        string $ability,
+        Restriction|string $restriction,
         ?DateTimeInterface $expiresAt = null,
         ?string $reason = null,
         ?Model $target = null,
         ?Model $moderator = null,
     ): void {
-        $restriction = Restriction::query()->firstOrCreate(['name' => $ability]);
+        if (is_string($restriction)) {
+            $restriction = Restriction::query()->firstWhere('name', $restriction);
+        }
 
-        $this->restrictions()->syncWithoutDetaching([
-            $restriction->getKey() => [
-                'target_type' => $target instanceof Model ? Relation::getMorphAlias($target::class) : null,
-                'target_id' => $target instanceof Model ? $target->getKey() : null,
-                'moderator_type' => $moderator instanceof Model ? Relation::getMorphAlias($moderator::class) : null,
-                'moderator_id' => $moderator instanceof Model ? $moderator->getKey() : null,
-                'expires_at' => $expiresAt,
-                'reason' => $reason,
-            ],
+        throw_if($restriction === null, InvalidArgumentException::class, "Restriction with name '{$restriction}' does not exist.");
+
+        $this->restrictions()->attach($restriction, [
+            'target_type' => $target instanceof Model ? Relation::getMorphAlias($target::class) : null,
+            'target_id' => $target instanceof Model ? $target->getKey() : null,
+            'moderator_type' => $moderator instanceof Model ? Relation::getMorphAlias($moderator::class) : null,
+            'moderator_id' => $moderator instanceof Model ? $moderator->getKey() : null,
+            'expires_at' => $expiresAt,
+            'reason' => $reason,
         ]);
+
+        if (config('restriction.events_enabled')) {
+            event(new ModelRestricted($this->getModel(), $restriction));
+        }
     }
 
     public function isRestricted(string $ability, ?Model $target = null): bool

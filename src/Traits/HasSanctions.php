@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
+use InvalidArgumentException;
+use Kyrch\LaravelRestrictions\Events\ModelSanctioned;
 use Kyrch\LaravelRestrictions\Models\Sanction;
 use TypeError;
 
@@ -30,23 +32,27 @@ trait HasSanctions
     }
 
     public function applySanction(
-        Sanction|int|string $sanction,
+        Sanction|string $sanction,
         ?DateTimeInterface $expiresAt = null,
         ?string $reason = null,
         ?Model $moderator = null,
     ): void {
-        if ($sanction instanceof Sanction) {
-            $sanction->getKey();
+        if (is_string($sanction)) {
+            $sanction = Sanction::query()->firstWhere('name', $sanction);
         }
 
-        $this->sanctions()->syncWithoutDetaching([
-            $sanction => [
-                'moderator_type' => $moderator instanceof Model ? Relation::getMorphAlias($moderator::class) : null,
-                'moderator_id' => $moderator instanceof Model ? $moderator->getKey() : null,
-                'expires_at' => $expiresAt,
-                'reason' => $reason,
-            ],
+        throw_if($sanction === null, InvalidArgumentException::class, "Sanction with name '{$sanction}' does not exist.");
+
+        $this->sanctions()->attach($sanction, [
+            'moderator_type' => $moderator instanceof Model ? Relation::getMorphAlias($moderator::class) : null,
+            'moderator_id' => $moderator instanceof Model ? $moderator->getKey() : null,
+            'expires_at' => $expiresAt,
+            'reason' => $reason,
         ]);
+
+        if (config('restriction.events_enabled')) {
+            event(new ModelSanctioned($this->getModel(), $sanction));
+        }
     }
 
     /**

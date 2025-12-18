@@ -8,6 +8,8 @@ use Kyrch\LaravelRestrictions\Pivots\ModelRestriction;
 use Kyrch\LaravelRestrictions\Pivots\ModelSanction;
 
 return [
+    'events_enabled' => true,
+
     'models' => [
         'restriction' => Restriction::class,
         'sanction' => Sanction::class,

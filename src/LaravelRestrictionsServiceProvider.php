@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kyrch\LaravelRestrictions;
 
-use Kyrch\LaravelRestrictions\Commands\LaravelRestrictionsCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -17,8 +18,7 @@ class LaravelRestrictionsServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('laravel-restrictions')
-            ->hasConfigFile()
-            ->hasMigration('create_laravel_restrictions_table')
-            ->hasCommand(LaravelRestrictionsCommand::class);
+            ->hasConfigFile('restriction')
+            ->hasMigration('create_restriction_tables');
     }
 }

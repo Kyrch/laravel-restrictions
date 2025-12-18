@@ -1,0 +1,55 @@
+<?php
+
+declare(strict_types=1);
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up()
+    {
+        $tableNames = config('restriction.table_names');
+
+        Schema::create($tableNames['restriction'], function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps(6);
+        });
+
+        Schema::create($tableNames['sanction'], function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps(6);
+        });
+
+        Schema::create($tableNames['sanction_restriction'], function (Blueprint $table) use ($tableNames) {
+            $table->id();
+            $table->foreign('sanction_id')->references('id')->on($tableNames['sanction'])->cascadeOnDelete();
+            $table->foreign('restriction_id')->references('id')->on($tableNames['restriction'])->cascadeOnDelete();
+            $table->timestamps(6);
+        });
+
+        Schema::create($tableNames['model_sanctions'], function (Blueprint $table) use ($tableNames) {
+            $table->id();
+            $table->morphs('model');
+            $table->foreign('sanction_id')->references('id')->on($tableNames['sanction'])->cascadeOnDelete();
+            $table->nullableMorphs('moderator');
+            $table->timestamp('expires_at')->nullable();
+            $table->text('reason')->nullable();
+            $table->timestamps(6);
+        });
+
+        Schema::create($tableNames['model_restrictions'], function (Blueprint $table) use ($tableNames) {
+            $table->id();
+            $table->morphs('model');
+            $table->foreign('restriction_id')->references('id')->on($tableNames['restriction'])->cascadeOnDelete();
+            $table->nullableMorphs('target');
+            $table->nullableMorphs('moderator');
+            $table->timestamp('expires_at')->nullable();
+            $table->text('reason')->nullable();
+            $table->timestamps(6);
+        });
+    }
+};

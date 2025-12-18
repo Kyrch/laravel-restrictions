@@ -1,17 +1,17 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "kyrch/laravel-restrictions",
+    "description": "Restrict your models",
     "keywords": [
-        ":vendor_name",
+        "Kyrch",
         "laravel",
-        ":package_slug"
+        "laravel-restrictions"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/kyrch/laravel-restrictions",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Kyrch",
+            "email": "kyrchk5@gmail.com",
             "role": "Developer"
         }
     ],
@@ -21,9 +21,10 @@
         "illuminate/contracts": "^11.0||^12.0"
     },
     "require-dev": {
+        "driftingly/rector-laravel": "^2.1",
+        "larastan/larastan": "^3.0",
         "laravel/pint": "^1.14",
         "nunomaduro/collision": "^8.8",
-        "larastan/larastan": "^3.0",
         "orchestra/testbench": "^10.0.0||^9.0.0",
         "pestphp/pest": "^4.0",
         "pestphp/pest-plugin-arch": "^4.0",
@@ -31,27 +32,40 @@
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
-        "spatie/laravel-ray": "^1.35"
+        "rector/rector": "^2.2"
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Kyrch\\LaravelRestrictions\\": "src/",
+            "Kyrch\\LaravelRestrictions\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/",
+            "Kyrch\\LaravelRestrictions\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
     "scripts": {
+        "setup": [
+            "composer install"
+        ],
         "post-autoload-dump": "@composer run prepare",
         "prepare": "@php vendor/bin/testbench package:discover --ansi",
-        "analyse": "vendor/bin/phpstan analyse",
+        "post-update-cmd": [
+            "composer bump"
+        ],
+        "lint": [
+            "rector",
+            "pint"
+        ],
+        "test:lint": [
+            "rector --dry-run",
+            "pint --test"
+        ],
+        "test:types": "./vendor/bin/phpstan analyse --memory-limit=-1",
         "test": "vendor/bin/pest",
-        "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint"
+        "test-coverage": "vendor/bin/pest --coverage"
     },
     "config": {
         "sort-packages": true,
@@ -63,10 +77,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Kyrch\\LaravelRestrictions\\LaravelRestrictionsServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "LaravelRestrictions": "Kyrch\\LaravelRestrictions\\Facades\\LaravelRestrictions"
             }
         }
     },

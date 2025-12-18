@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Kyrch\LaravelRestrictions\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LaravelRestrictionsCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-restrictions';
 
     public $description = 'My command';
 

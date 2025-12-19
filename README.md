@@ -28,32 +28,6 @@ You can publish the config file with:
 php artisan vendor:publish --tag="laravel-restrictions-config"
 ```
 
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="laravel-restrictions-views"
-```
-
-## Usage
-
-```php
-$laravelRestrictions = new Kyrch\Restriction();
-echo $laravelRestrictions->echoPhrase('Hello, kyrch!');
-```
-
-## Testing
-
-```bash
-composer test
-```
-
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.

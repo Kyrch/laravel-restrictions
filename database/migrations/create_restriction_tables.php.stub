@@ -26,15 +26,15 @@ return new class extends Migration
 
         Schema::create($tableNames['sanction_restriction'], function (Blueprint $table) use ($tableNames) {
             $table->id();
-            $table->foreign('sanction_id')->references('id')->on($tableNames['sanction'])->cascadeOnDelete();
-            $table->foreign('restriction_id')->references('id')->on($tableNames['restriction'])->cascadeOnDelete();
+            $table->foreignId('sanction_id')->references('id')->on($tableNames['sanction'])->cascadeOnDelete();
+            $table->foreignId('restriction_id')->references('id')->on($tableNames['restriction'])->cascadeOnDelete();
             $table->timestamps(6);
         });
 
         Schema::create($tableNames['model_sanctions'], function (Blueprint $table) use ($tableNames) {
             $table->id();
             $table->morphs('model');
-            $table->foreign('sanction_id')->references('id')->on($tableNames['sanction'])->cascadeOnDelete();
+            $table->foreignId('sanction_id')->references('id')->on($tableNames['sanction'])->cascadeOnDelete();
             $table->nullableMorphs('moderator');
             $table->timestamp('expires_at')->nullable();
             $table->text('reason')->nullable();
@@ -44,7 +44,7 @@ return new class extends Migration
         Schema::create($tableNames['model_restrictions'], function (Blueprint $table) use ($tableNames) {
             $table->id();
             $table->morphs('model');
-            $table->foreign('restriction_id')->references('id')->on($tableNames['restriction'])->cascadeOnDelete();
+            $table->foreignId('restriction_id')->references('id')->on($tableNames['restriction'])->cascadeOnDelete();
             $table->nullableMorphs('target');
             $table->nullableMorphs('moderator');
             $table->timestamp('expires_at')->nullable();

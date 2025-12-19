@@ -6,18 +6,22 @@ namespace Kyrch\Restriction\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
-use Kyrch\Restriction\Contracts\Restriction as RestrictionContract;
 
-/**
- * @property int $id
- * @property string $name
- */
-class Restriction extends Model implements RestrictionContract
+class Restriction extends Model
 {
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->setTable(Config::get('restriction.table_names.restriction'));
+    }
+
     /**
-     * The table associated with the model.
+     * The attributes that are mass assignable.
      *
-     * @var string
+     * @var list<string>
      */
-    protected $table = Config::get('restriction.table_names.restriction');
+    protected $fillable = [
+        'name',
+    ];
 }

@@ -7,6 +7,7 @@ namespace Kyrch\Restriction\Events;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Kyrch\Restriction\Models\Restriction;
 
 class ModelRestricted
 {

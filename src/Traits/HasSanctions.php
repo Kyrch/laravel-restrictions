@@ -38,7 +38,7 @@ trait HasSanctions
         ?Model $moderator = null,
     ): void {
         if (is_string($sanction)) {
-            $sanction = Sanction::query()->firstWhere('name', $sanction);
+            $sanction = config('restriction.models.sanction')::query()->firstWhere('name', $sanction);
         }
 
         throw_if($sanction === null, InvalidArgumentException::class, "Sanction with name '{$sanction}' does not exist.");

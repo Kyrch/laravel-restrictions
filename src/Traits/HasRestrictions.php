@@ -37,7 +37,7 @@ trait HasRestrictions
         ?Model $moderator = null,
     ): void {
         if (is_string($restriction)) {
-            $restriction = Restriction::query()->firstWhere('name', $restriction);
+            $restriction = config('restriction.models.restriction')::query()->firstWhere('name', $restriction);
         }
 
         throw_if($restriction === null, InvalidArgumentException::class, "Restriction with name '{$restriction}' does not exist.");
@@ -82,7 +82,7 @@ trait HasRestrictions
     public function isRestrictedViaSanction(string $ability): bool
     {
         return $this->hasSanction(
-            Restriction::query()->firstWhere('name', $ability)->sanctions
+            config('restriction.models.restriction')::query()->firstWhere('name', $ability)->sanctions
         );
     }
 

@@ -21,12 +21,28 @@ use Illuminate\Support\Facades\Config;
  */
 class ModelSanction extends Pivot
 {
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->setTable(Config::get('restriction.table_names.model_sanctions'));
+    }
+
     /**
-     * The table associated with the model.
+     * The attributes that are mass assignable.
      *
-     * @var string
+     * @var list<string>
      */
-    protected $table = Config::get('restriction.table_names.model_sanctions');
+    protected $fillable = [
+        'expires_at',
+        'model_type',
+        'model_id',
+        'moderator_type',
+        'moderator_id',
+        'restriction_id',
+        'reason',
+        'sanction_id',
+    ];
 
     /**
      * Get the attributes that should be cast.

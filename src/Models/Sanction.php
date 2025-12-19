@@ -6,18 +6,22 @@ namespace Kyrch\Restriction\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
-use Kyrch\Restriction\Contracts\Sanction as SanctionContract;
 
-/**
- * @property int $id
- * @property string $name
- */
-class Sanction extends Model implements SanctionContract
+class Sanction extends Model
 {
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->setTable(Config::get('restriction.table_names.sanction'));
+    }
+
     /**
-     * The table associated with the model.
+     * The attributes that are mass assignable.
      *
-     * @var string
+     * @var list<string>
      */
-    protected $table = Config::get('restriction.table_names.sanction');
+    protected $fillable = [
+        'name',
+    ];
 }

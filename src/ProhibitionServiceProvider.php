@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Kyrch\Prohibition;
 
+use Kyrch\Prohibition\Commands\CreateProhibitionCommand;
+use Kyrch\Prohibition\Commands\CreateSanctionCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -20,6 +22,20 @@ class ProhibitionServiceProvider extends PackageServiceProvider
         ], 'laravel-prohibitions-migrations');
 
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+
+        $this->registerCommands();
+    }
+
+    protected function registerCommands(): void
+    {
+        if (! $this->app->runningInConsole()) {
+            return;
+        }
+
+        $this->commands([
+            CreateProhibitionCommand::class,
+            CreateSanctionCommand::class,
+        ]);
     }
 
     public function configurePackage(Package $package): void

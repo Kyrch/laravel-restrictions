@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Date;
 use Kyrch\Prohibition\Models\Prohibition;
 use Kyrch\Prohibition\Models\Sanction;
 
@@ -12,13 +12,13 @@ beforeEach(function (): void {
 });
 
 test('applies sanction to user', function (): void {
-    $this->testUser->applySanction('sanction', Carbon::now()->addDays(fake()->numberBetween(1, 10)));
+    $this->testUser->applySanction('sanction', Date::now()->addDays(fake()->numberBetween(1, 10)));
 
     expect($this->testUser->sanctions->isNotEmpty())->toBeTrue();
 });
 
 test('user is sanctioned', function (): void {
-    $this->testUser->applySanction('sanction', Carbon::now()->addDays(fake()->numberBetween(1, 10)));
+    $this->testUser->applySanction('sanction', Date::now()->addDays(fake()->numberBetween(1, 10)));
 
     expect($this->testUser->hasSanctionNotExpired('sanction'))->toBeTrue();
 });
@@ -32,7 +32,7 @@ test('user is prohibited via sanction', function (): void {
         Prohibition::query()->first()
     );
 
-    $this->testUser->applySanction('sanction', Carbon::now()->addDays(fake()->numberBetween(1, 10)));
+    $this->testUser->applySanction('sanction', Date::now()->addDays(fake()->numberBetween(1, 10)));
 
     expect($this->testUser->isProhibitedViaSanction('prohibition'))->toBeTrue();
 });

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Date;
 use Kyrch\Prohibition\Models\Prohibition;
 use Kyrch\Prohibition\Models\Sanction;
 
@@ -12,13 +12,13 @@ beforeEach(function (): void {
 });
 
 test('applies prohibition to user', function (): void {
-    $this->testUser->prohibit('prohibition', Carbon::now()->addDays(fake()->numberBetween(1, 10)));
+    $this->testUser->prohibit('prohibition', Date::now()->addDays(fake()->numberBetween(1, 10)));
 
     expect($this->testUser->prohibitions->isNotEmpty())->toBeTrue();
 });
 
 test('user is prohibited from', function (): void {
-    $this->testUser->prohibit('prohibition', Carbon::now()->addDays(fake()->numberBetween(1, 10)));
+    $this->testUser->prohibit('prohibition', Date::now()->addDays(fake()->numberBetween(1, 10)));
 
     expect($this->testUser->isProhibitedFrom('prohibition'))->toBeTrue();
 });
@@ -28,13 +28,13 @@ test('user is not prohibited from', function (): void {
 });
 
 test('user is directly prohibited from', function (): void {
-    $this->testUser->prohibit('prohibition', Carbon::now()->addDays(fake()->numberBetween(1, 10)));
+    $this->testUser->prohibit('prohibition', Date::now()->addDays(fake()->numberBetween(1, 10)));
 
     expect($this->testUser->isDirectlyProhibitedFrom('prohibition'))->toBeTrue();
 });
 
 test('user is not directly prohibited when sanctioned', function (): void {
-    $this->testUser->applySanction('sanction', Carbon::now()->addDays(fake()->numberBetween(1, 10)));
+    $this->testUser->applySanction('sanction', Date::now()->addDays(fake()->numberBetween(1, 10)));
 
     expect($this->testUser->isDirectlyProhibitedFrom('prohibition'))->toBeFalse();
 });

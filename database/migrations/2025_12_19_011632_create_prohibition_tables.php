@@ -8,30 +8,30 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
         $tableNames = config('prohibition.table_names');
 
-        Schema::create($tableNames['prohibition'], function (Blueprint $table) {
+        Schema::create($tableNames['prohibition'], function (Blueprint $table): void {
             $table->id();
             $table->string('name');
             $table->timestamps(6);
         });
 
-        Schema::create($tableNames['sanction'], function (Blueprint $table) {
+        Schema::create($tableNames['sanction'], function (Blueprint $table): void {
             $table->id();
             $table->string('name');
             $table->timestamps(6);
         });
 
-        Schema::create($tableNames['sanction_prohibition'], function (Blueprint $table) use ($tableNames) {
+        Schema::create($tableNames['sanction_prohibition'], function (Blueprint $table) use ($tableNames): void {
             $table->id();
             $table->foreignId('sanction_id')->references('id')->on($tableNames['sanction'])->cascadeOnDelete();
             $table->foreignId('prohibition_id')->references('id')->on($tableNames['prohibition'])->cascadeOnDelete();
             $table->timestamps(6);
         });
 
-        Schema::create($tableNames['model_sanctions'], function (Blueprint $table) use ($tableNames) {
+        Schema::create($tableNames['model_sanctions'], function (Blueprint $table) use ($tableNames): void {
             $table->id();
             $table->morphs('model');
             $table->foreignId('sanction_id')->references('id')->on($tableNames['sanction'])->cascadeOnDelete();
@@ -41,7 +41,7 @@ return new class extends Migration
             $table->timestamps(6);
         });
 
-        Schema::create($tableNames['model_prohibitions'], function (Blueprint $table) use ($tableNames) {
+        Schema::create($tableNames['model_prohibitions'], function (Blueprint $table) use ($tableNames): void {
             $table->id();
             $table->morphs('model');
             $table->foreignId('prohibition_id')->references('id')->on($tableNames['prohibition'])->cascadeOnDelete();

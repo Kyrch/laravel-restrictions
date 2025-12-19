@@ -26,6 +26,13 @@ class Sanction extends Model
         'name',
     ];
 
+    public static function findOrCreate(string $name): static
+    {
+        return static::query()->firstOrCreate([
+            'name' => $name,
+        ]);
+    }
+
     public function prohibitions(): BelongsToMany
     {
         return $this->belongsToMany(

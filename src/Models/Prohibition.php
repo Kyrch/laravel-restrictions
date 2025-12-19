@@ -26,6 +26,13 @@ class Prohibition extends Model
         'name',
     ];
 
+    public static function findOrCreate(string $name): static
+    {
+        return static::query()->firstOrCreate([
+            'name' => $name,
+        ]);
+    }
+
     public function sanctions(): BelongsToMany
     {
         return $this->belongsToMany(

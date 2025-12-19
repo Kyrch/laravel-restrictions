@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kyrch\Prohibition\Tests;
 
+use Illuminate\Database\ConnectionResolverInterface;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Application;
 use Kyrch\Prohibition\ProhibitionServiceProvider;
@@ -29,7 +30,7 @@ class TestCase extends Orchestra
 
     protected function setUpDatabase(Application $app)
     {
-        $schema = $app['db']->connection()->getSchemaBuilder();
+        $schema = $app->make(ConnectionResolverInterface::class)->connection()->getSchemaBuilder();
 
         $schema->create('users', function (Blueprint $table): void {
             $table->increments('id');

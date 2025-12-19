@@ -5,6 +5,14 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/kyrch/laravel-prohibitions/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/kyrch/laravel-prohibitions/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/kyrch/laravel-prohibitions.svg?style=flat-square)](https://packagist.org/packages/kyrch/laravel-prohibitions)
 
+## Description
+
+Laravel Prohibitions is a Laravel package that allows you to prohibit users from executing specific actions for a determined period of time.
+
+Instead of relying on hard-coded checks or ad-hoc flags, this package introduces a sanction-based system where actions can be explicitly denied through well-defined rules.
+
+The package also provides a Sanction model, which works as a preset of prohibited actions, making it easy to group multiple prohibitions under a single disciplinary rule — such as temporary bans, feature restrictions, or full account suspensions.
+
 ## Installation
 
 You can install the package via composer:
@@ -26,10 +34,14 @@ You can publish the config file with:
 php artisan vendor:publish --tag="laravel-prohibitions-config"
 ```
 
+### Usage
+
+#### Setup
+
 Add the `HasSanctions` trait to your User model:
 
 ```php
-use Kyrch\Prohibitions\Traits\HasSanctions;
+use Kyrch\Prohibition\Traits\HasSanctions;
 
 class User extends Authenticatable
 {
@@ -37,18 +49,38 @@ class User extends Authenticatable
 }
 ```
 
+You need to create your sanctions and prohibitions first. For example:
+
+```php
+$prohibition = Prohibition::query()->create(['name' => 'update post']);
+
+$sanction = Sanction::query()->create(['name' => 'posts']);
+
+$prohibition->sanctions()->attach($sanction);
+```
+
+#### How to prohibit
+
 Now you can use methods this packages provides, such as:
 
 ```php
-# Restrict the user to update any posts.
+# Prohibit the user from updating any posts.
 $user->prohibit('update post', now()->addWeek());
 
 # Similar to roles, you can create a kind of "ban preset" that has a group of prohibitions.
-$user->applySanction('comments', now()->addWeek());
+$user->applySanction('posts', now()->addWeek());
 
-# Check if user is prohibited from execute an action.
+# Check if user is prohibited from updating any post.
 $user->isProhibitedFrom('update post');
 ```
+
+It is recommended to use the `isProhibitedFrom()` method in your `Gate::before` or
+the `before` method in your policy class.
+
+#### Events
+
+There are two events: `ModelProhibitionTriggered` and `ModelSanctionTriggered`.
+If you don't want them enabled, you can disable it in the published config file.
 
 ## Changelog
 

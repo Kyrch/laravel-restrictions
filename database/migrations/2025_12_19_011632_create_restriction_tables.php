@@ -45,7 +45,6 @@ return new class extends Migration
             $table->id();
             $table->morphs('model');
             $table->foreignId('restriction_id')->references('id')->on($tableNames['restriction'])->cascadeOnDelete();
-            $table->nullableMorphs('target');
             $table->nullableMorphs('moderator');
             $table->timestamp('expires_at')->nullable();
             $table->text('reason')->nullable();

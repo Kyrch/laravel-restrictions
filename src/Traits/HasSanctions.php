@@ -56,10 +56,14 @@ trait HasSanctions
     }
 
     /**
-     * @param  string|array|Collection  $sanctions
+     * @param  string|array|Collection|null  $sanctions
      */
     public function hasSanctionNotExpired($sanctions): bool
     {
+        if ($sanctions === null) {
+            return false;
+        }
+
         $this->loadMissing('sanctions');
 
         if (is_string($sanctions)) {

@@ -33,7 +33,6 @@ trait HasRestrictions
         Restriction|string $restriction,
         ?DateTimeInterface $expiresAt = null,
         ?string $reason = null,
-        ?Model $target = null,
         ?Model $moderator = null,
     ): void {
         if (is_string($restriction)) {
@@ -43,8 +42,6 @@ trait HasRestrictions
         throw_if($restriction === null, InvalidArgumentException::class, "Restriction with name '{$restriction}' does not exist.");
 
         $this->restrictions()->attach($restriction, [
-            'target_type' => $target instanceof Model ? Relation::getMorphAlias($target::class) : null,
-            'target_id' => $target instanceof Model ? $target->getKey() : null,
             'moderator_type' => $moderator instanceof Model ? Relation::getMorphAlias($moderator::class) : null,
             'moderator_id' => $moderator instanceof Model ? $moderator->getKey() : null,
             'expires_at' => $expiresAt,
@@ -56,20 +53,19 @@ trait HasRestrictions
         }
     }
 
-    public function isRestricted(string $ability, ?Model $target = null): bool
+    public function isRestricted(string $ability): bool
     {
-        if ($this->isDirectlyRestricted($ability, $target)) {
+        if ($this->isDirectlyRestricted($ability)) {
             return true;
         }
 
         return (bool) $this->isRestrictedViaSanction($ability);
     }
 
-    public function isDirectlyRestricted(string $ability, ?Model $target = null): bool
+    public function isDirectlyRestricted(string $ability): bool
     {
         $restriction = $this->loadMissing('restrictions')->restrictions
             ->where('name', $ability)
-            ->when($target instanceof Model, fn (Collection $collection) => $collection->where('target_type', Relation::getMorphAlias($target::class))->where('target_id', $target->getKey()))
             ->first();
 
         if ($restriction) {
@@ -82,7 +78,7 @@ trait HasRestrictions
     public function isRestrictedViaSanction(string $ability): bool
     {
         return $this->hasSanctionNotExpired(
-            config('restriction.models.restriction')::query()->firstWhere('name', $ability)->sanctions
+            config('restriction.models.restriction')::query()->firstWhere('name', $ability)?->sanctions
         );
     }
 

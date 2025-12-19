@@ -16,8 +16,6 @@ use Illuminate\Support\Facades\Config;
  * @property int|string|null $moderator_id
  * @property int $restriction_id
  * @property string|null $reason
- * @property string $target_type
- * @property int|string $target_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
@@ -43,8 +41,6 @@ class ModelRestriction extends Pivot
         'moderator_id',
         'restriction_id',
         'reason',
-        'target_type',
-        'target_id',
     ];
 
     /**

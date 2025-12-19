@@ -9,6 +9,19 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class RestrictionServiceProvider extends PackageServiceProvider
 {
+    public function boot(): void
+    {
+        $this->publishes([
+            __DIR__.'/../config/restriction.php' => config_path('restriction.php'),
+        ], 'laravel-restrictions-config');
+
+         $this->publishes([
+            __DIR__.'/../database/migrations' => database_path('migrations'),
+        ], 'laravel-restrictions-migrations');
+
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+    }
+
     public function configurePackage(Package $package): void
     {
         /*

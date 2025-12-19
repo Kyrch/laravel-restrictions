@@ -37,3 +37,9 @@ test('user is restricted via sanction', function (): void {
 
     expect($this->testUser->isRestrictedViaSanction('restriction'))->toBeTrue();
 });
+
+test('expires_at null means permanent sanction', function (): void {
+    $this->testUser->applySanction('sanction', null);
+
+    expect($this->testUser->hasSanctionNotExpired('sanction'))->toBeTrue();
+});

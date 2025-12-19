@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kyrch\Restriction\Tests;
 
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Foundation\Application;
 use Kyrch\Restriction\RestrictionServiceProvider;
 use Kyrch\Restriction\Tests\TestModels\User;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -26,7 +27,7 @@ class TestCase extends Orchestra
         $this->setUpDatabase($this->app);
     }
 
-    protected function setUpDatabase(array $app)
+    protected function setUpDatabase(Application $app)
     {
         $schema = $app['db']->connection()->getSchemaBuilder();
 

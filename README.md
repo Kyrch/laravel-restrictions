@@ -26,7 +26,7 @@ You can publish the config file with:
 php artisan vendor:publish --tag="laravel-restrictions-config"
 ```
 
-Add the `HasSactions` trait to your User model:
+Add the `HasSanctions` trait to your User model:
 
 ```php
 class User extends Authenticatable

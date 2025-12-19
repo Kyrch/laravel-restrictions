@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
+use Carbon\Carbon;
 use Kyrch\Restriction\Models\Restriction;
 use Kyrch\Restriction\Models\Sanction;
-
-use function Illuminate\Support\now;
 
 beforeEach(function (): void {
     Restriction::query()->create(['name' => 'restriction']);
@@ -13,13 +12,13 @@ beforeEach(function (): void {
 });
 
 test('applies sanction to user', function (): void {
-    $this->testUser->applySanction('sanction', now()->addDays(fake()->numberBetween(1, 10)));
+    $this->testUser->applySanction('sanction', Carbon::now()->addDays(fake()->numberBetween(1, 10)));
 
     expect($this->testUser->sanctions->isNotEmpty())->toBeTrue();
 });
 
 test('user is sanctioned', function (): void {
-    $this->testUser->applySanction('sanction', now()->addDays(fake()->numberBetween(1, 10)));
+    $this->testUser->applySanction('sanction', Carbon::now()->addDays(fake()->numberBetween(1, 10)));
 
     expect($this->testUser->hasSanctionNotExpired('sanction'))->toBeTrue();
 });
@@ -33,7 +32,7 @@ test('user is restricted via sanction', function (): void {
         Restriction::query()->first()
     );
 
-    $this->testUser->applySanction('sanction', now()->addDays(fake()->numberBetween(1, 10)));
+    $this->testUser->applySanction('sanction', Carbon::now()->addDays(fake()->numberBetween(1, 10)));
 
     expect($this->testUser->isRestrictedViaSanction('restriction'))->toBeTrue();
 });

@@ -43,7 +43,7 @@ class TestCase extends Orchestra
 
     protected function prepareMigration(): void
     {
-        self::$migration = include __DIR__.'/../database/migrations/create_restriction_tables.php.stub';
+        self::$migration = include __DIR__.'/../database/migrations/create_restriction_tables.php';
     }
 
     protected function getPackageProviders($app)

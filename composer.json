@@ -1,6 +1,6 @@
 {
     "name": "kyrch/laravel-restrictions",
-    "description": "Restrict your models",
+    "description": "Restrict your models in a way similar to spatie/laravel-permission.",
     "keywords": [
         "Kyrch",
         "laravel",

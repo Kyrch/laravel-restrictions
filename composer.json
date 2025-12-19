@@ -1,6 +1,6 @@
 {
     "name": "kyrch/laravel-prohibitions",
-    "description": "Restrict your models in a way similar to spatie/laravel-permission.",
+    "description": "Prohibit your models from execute an action in a way similar to spatie/laravel-permission.",
     "keywords": [
         "Kyrch",
         "laravel",

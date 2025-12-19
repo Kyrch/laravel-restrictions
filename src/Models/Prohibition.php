@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Kyrch\Restriction\Models;
+namespace Kyrch\Prohibition\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Config;
 
-class Restriction extends Model
+class Prohibition extends Model
 {
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
 
-        $this->setTable(Config::get('restriction.table_names.restriction'));
+        $this->setTable(Config::get('prohibition.table_names.prohibition'));
     }
 
     /**
@@ -30,7 +30,7 @@ class Restriction extends Model
     {
         return $this->belongsToMany(
             Sanction::class,
-            config('restriction.table_names.sanction_restriction'),
+            config('prohibition.table_names.sanction_prohibition'),
         );
     }
 }

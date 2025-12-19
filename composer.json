@@ -1,12 +1,12 @@
 {
-    "name": "kyrch/laravel-restrictions",
+    "name": "kyrch/laravel-prohibitions",
     "description": "Restrict your models in a way similar to spatie/laravel-permission.",
     "keywords": [
         "Kyrch",
         "laravel",
-        "laravel-restrictions"
+        "laravel-prohibitions"
     ],
-    "homepage": "https://github.com/kyrch/laravel-restrictions",
+    "homepage": "https://github.com/kyrch/laravel-prohibitions",
     "license": "MIT",
     "authors": [
         {
@@ -36,13 +36,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Kyrch\\Restriction\\": "src/",
-            "Kyrch\\Restriction\\Database\\Factories\\": "database/factories/"
+            "Kyrch\\Prohibition\\": "src/",
+            "Kyrch\\Prohibition\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Kyrch\\Restriction\\Tests\\": "tests/",
+            "Kyrch\\Prohibition\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
@@ -77,10 +77,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Kyrch\\Restriction\\RestrictionServiceProvider"
+                "Kyrch\\Prohibition\\ProhibitionServiceProvider"
             ],
             "aliases": {
-                "Restriction": "Kyrch\\Restriction\\Facades\\Restriction"
+                "Prohibition": "Kyrch\\Prohibition\\Facades\\Prohibition"
             }
         }
     },

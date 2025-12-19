@@ -1,3 +1,3 @@
 # Changelog
 
-All notable changes to `laravel-restrictions` will be documented in this file.
+All notable changes to `laravel-prohibitions` will be documented in this file.

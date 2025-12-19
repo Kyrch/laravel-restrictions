@@ -3,11 +3,11 @@
 declare(strict_types=1);
 
 use Carbon\Carbon;
-use Kyrch\Restriction\Models\Restriction;
-use Kyrch\Restriction\Models\Sanction;
+use Kyrch\Prohibition\Models\Prohibition;
+use Kyrch\Prohibition\Models\Sanction;
 
 beforeEach(function (): void {
-    Restriction::query()->create(['name' => 'restriction']);
+    Prohibition::query()->create(['name' => 'prohibition']);
     Sanction::query()->create(['name' => 'sanction']);
 });
 
@@ -27,14 +27,14 @@ test('user is not sanctioned', function (): void {
     expect($this->testUser->hasSanctionNotExpired('sanction'))->toBeFalse();
 });
 
-test('user is restricted via sanction', function (): void {
-    Sanction::query()->first()->restrictions()->attach(
-        Restriction::query()->first()
+test('user is prohibited via sanction', function (): void {
+    Sanction::query()->first()->prohibitions()->attach(
+        Prohibition::query()->first()
     );
 
     $this->testUser->applySanction('sanction', Carbon::now()->addDays(fake()->numberBetween(1, 10)));
 
-    expect($this->testUser->isRestrictedViaSanction('restriction'))->toBeTrue();
+    expect($this->testUser->isProhibitedViaSanction('prohibition'))->toBeTrue();
 });
 
 test('expires_at null means permanent sanction', function (): void {

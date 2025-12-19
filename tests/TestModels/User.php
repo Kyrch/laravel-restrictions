@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Kyrch\Restriction\Tests\TestModels;
+namespace Kyrch\Prohibition\Tests\TestModels;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\Access\Authorizable;
-use Kyrch\Restriction\Traits\HasSanctions;
+use Kyrch\Prohibition\Traits\HasSanctions;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {

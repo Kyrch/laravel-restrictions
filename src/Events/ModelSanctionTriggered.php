@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Kyrch\Restriction\Events;
+namespace Kyrch\Prohibition\Events;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Kyrch\Restriction\Models\Sanction;
+use Kyrch\Prohibition\Models\Sanction;
 
-class ModelSanctioned
+class ModelSanctionTriggered
 {
     use Dispatchable;
     use SerializesModels;

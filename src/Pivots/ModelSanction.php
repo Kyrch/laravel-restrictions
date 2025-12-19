@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Kyrch\Restriction\Pivots;
+namespace Kyrch\Prohibition\Pivots;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Support\Carbon;
@@ -25,7 +25,7 @@ class ModelSanction extends Pivot
     {
         parent::__construct($attributes);
 
-        $this->setTable(Config::get('restriction.table_names.model_sanctions'));
+        $this->setTable(Config::get('prohibition.table_names.model_sanctions'));
     }
 
     /**
@@ -39,7 +39,7 @@ class ModelSanction extends Pivot
         'model_id',
         'moderator_type',
         'moderator_id',
-        'restriction_id',
+        'prohibition_id',
         'reason',
         'sanction_id',
     ];

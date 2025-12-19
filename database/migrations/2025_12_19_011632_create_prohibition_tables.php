@@ -10,9 +10,9 @@ return new class extends Migration
 {
     public function up()
     {
-        $tableNames = config('restriction.table_names');
+        $tableNames = config('prohibition.table_names');
 
-        Schema::create($tableNames['restriction'], function (Blueprint $table) {
+        Schema::create($tableNames['prohibition'], function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps(6);
@@ -24,10 +24,10 @@ return new class extends Migration
             $table->timestamps(6);
         });
 
-        Schema::create($tableNames['sanction_restriction'], function (Blueprint $table) use ($tableNames) {
+        Schema::create($tableNames['sanction_prohibition'], function (Blueprint $table) use ($tableNames) {
             $table->id();
             $table->foreignId('sanction_id')->references('id')->on($tableNames['sanction'])->cascadeOnDelete();
-            $table->foreignId('restriction_id')->references('id')->on($tableNames['restriction'])->cascadeOnDelete();
+            $table->foreignId('prohibition_id')->references('id')->on($tableNames['prohibition'])->cascadeOnDelete();
             $table->timestamps(6);
         });
 
@@ -41,10 +41,10 @@ return new class extends Migration
             $table->timestamps(6);
         });
 
-        Schema::create($tableNames['model_restrictions'], function (Blueprint $table) use ($tableNames) {
+        Schema::create($tableNames['model_prohibitions'], function (Blueprint $table) use ($tableNames) {
             $table->id();
             $table->morphs('model');
-            $table->foreignId('restriction_id')->references('id')->on($tableNames['restriction'])->cascadeOnDelete();
+            $table->foreignId('prohibition_id')->references('id')->on($tableNames['prohibition'])->cascadeOnDelete();
             $table->nullableMorphs('moderator');
             $table->timestamp('expires_at')->nullable();
             $table->text('reason')->nullable();

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Kyrch\Restriction\Models;
+namespace Kyrch\Prohibition\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -14,7 +14,7 @@ class Sanction extends Model
     {
         parent::__construct($attributes);
 
-        $this->setTable(Config::get('restriction.table_names.sanction'));
+        $this->setTable(Config::get('prohibition.table_names.sanction'));
     }
 
     /**
@@ -26,11 +26,11 @@ class Sanction extends Model
         'name',
     ];
 
-    public function restrictions(): BelongsToMany
+    public function prohibitions(): BelongsToMany
     {
         return $this->belongsToMany(
-            Restriction::class,
-            config('restriction.table_names.sanction_restriction'),
+            Prohibition::class,
+            config('prohibition.table_names.sanction_prohibition'),
         );
     }
 }

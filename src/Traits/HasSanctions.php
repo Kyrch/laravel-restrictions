@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Kyrch\Restriction\Traits;
+namespace Kyrch\Prohibition\Traits;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
-use Kyrch\Restriction\Events\ModelSanctioned;
-use Kyrch\Restriction\Models\Sanction;
+use Kyrch\Prohibition\Events\ModelSanctionTriggered;
+use Kyrch\Prohibition\Models\Sanction;
 use TypeError;
 
 /**
@@ -19,14 +19,14 @@ use TypeError;
  */
 trait HasSanctions
 {
-    use HasRestrictions;
+    use HasProhibitions;
 
     public function sanctions(): MorphToMany
     {
         return $this->morphToMany(
-            config('restriction.models.sanction'),
+            config('prohibition.models.sanction'),
             'model',
-            config('restriction.table_names.model_sanctions'),
+            config('prohibition.table_names.model_sanctions'),
             'model_id',
         );
     }
@@ -38,7 +38,7 @@ trait HasSanctions
         ?Model $moderator = null,
     ): void {
         if (is_string($sanction)) {
-            $sanction = config('restriction.models.sanction')::query()->firstWhere('name', $sanction);
+            $sanction = config('prohibition.models.sanction')::query()->firstWhere('name', $sanction);
         }
 
         throw_if($sanction === null, InvalidArgumentException::class, "Sanction with name '{$sanction}' does not exist.");
@@ -50,8 +50,8 @@ trait HasSanctions
             'reason' => $reason,
         ]);
 
-        if (config('restriction.events_enabled')) {
-            event(new ModelSanctioned($this->getModel(), $sanction));
+        if (config('prohibition.events_enabled')) {
+            event(new ModelSanctionTriggered($this->getModel(), $sanction));
         }
     }
 

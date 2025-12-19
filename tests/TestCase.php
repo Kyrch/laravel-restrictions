@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Kyrch\Restriction\Tests;
+namespace Kyrch\Prohibition\Tests;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Application;
-use Kyrch\Restriction\RestrictionServiceProvider;
-use Kyrch\Restriction\Tests\TestModels\User;
+use Kyrch\Prohibition\ProhibitionServiceProvider;
+use Kyrch\Prohibition\Tests\TestModels\User;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -43,13 +43,13 @@ class TestCase extends Orchestra
 
     protected function prepareMigration(): void
     {
-        self::$migration = include __DIR__.'/../database/migrations/2025_12_19_011632_create_restriction_tables.php';
+        self::$migration = include __DIR__.'/../database/migrations/2025_12_19_011632_create_prohibition_tables.php';
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            RestrictionServiceProvider::class,
+            ProhibitionServiceProvider::class,
         ];
     }
 

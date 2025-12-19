@@ -5,8 +5,6 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/kyrch/laravel-restrictions/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/kyrch/laravel-restrictions/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/kyrch/laravel-restrictions.svg?style=flat-square)](https://packagist.org/packages/kyrch/laravel-restrictions)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
-
 ## Installation
 
 You can install the package via composer:
@@ -26,6 +24,15 @@ You can publish the config file with:
 
 ```bash
 php artisan vendor:publish --tag="laravel-restrictions-config"
+```
+
+Add the `HasSactions` trait to your User model:
+
+```php
+class User extends Authenticatable
+{
+    use HasSanctions;
+}
 ```
 
 ## Changelog

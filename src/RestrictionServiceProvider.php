@@ -15,7 +15,7 @@ class RestrictionServiceProvider extends PackageServiceProvider
             __DIR__.'/../config/restriction.php' => config_path('restriction.php'),
         ], 'laravel-restrictions-config');
 
-         $this->publishes([
+        $this->publishes([
             __DIR__.'/../database/migrations' => database_path('migrations'),
         ], 'laravel-restrictions-migrations');
 

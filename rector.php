@@ -3,8 +3,6 @@
 declare(strict_types=1);
 
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
-use Rector\CodingStyle\Rector\ArrowFunction\ArrowFunctionDelegatingCallToFirstClassCallableRector;
-use Rector\CodingStyle\Rector\Closure\ClosureDelegatingCallToFirstClassCallableRector;
 use Rector\Config\RectorConfig;
 use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
@@ -45,15 +43,13 @@ return RectorConfig::configure()
         __DIR__.'/config',
         __DIR__.'/src',
         __DIR__.'/database',
+        __DIR__.'/tests',
     ])
     ->withSkip([
-        __DIR__.'/database/migrations',
         AddOverrideAttributeToOverriddenMethodsRector::class,
         DisallowedEmptyRuleFixerRector::class,
         DispatchToHelperFunctionsRector::class,
         ConvertEnumerableToArrayToAllRector::class,
-        ArrowFunctionDelegatingCallToFirstClassCallableRector::class,
-        ClosureDelegatingCallToFirstClassCallableRector::class,
     ])
     ->withPreparedSets(
         deadCode: true,

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Kyrch\Restriction\Tests;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Schema\Blueprint;
 use Kyrch\Restriction\RestrictionServiceProvider;
 use Kyrch\Restriction\Tests\TestModels\User;
@@ -25,25 +24,20 @@ class TestCase extends Orchestra
         }
 
         $this->setUpDatabase($this->app);
-
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Kyrch\\Restriction\\Database\\Factories\\'.class_basename($modelName).'Factory'
-        );
     }
 
-    protected function setUpDatabase($app)
+    protected function setUpDatabase(array $app)
     {
         $schema = $app['db']->connection()->getSchemaBuilder();
 
-        $schema->create('users', function (Blueprint $table) {
+        $schema->create('users', function (Blueprint $table): void {
             $table->increments('id');
             $table->string('email');
-            $table->softDeletes();
         });
 
         self::$migration->up();
 
-        $this->testUser = User::create(['email' => 'test@user.com']);
+        $this->testUser = User::query()->create(['email' => 'test@user.com']);
     }
 
     protected function prepareMigration(): void
@@ -58,14 +52,8 @@ class TestCase extends Orchestra
         ];
     }
 
-    public function getEnvironmentSetUp($app)
+    public function getEnvironmentSetUp($app): void
     {
         config()->set('database.default', 'testing');
-
-        /*
-         foreach (\Illuminate\Support\Facades\File::allFiles(__DIR__ . '/../database/migrations') as $migration) {
-            (include $migration->getRealPath())->up();
-         }
-         */
     }
 }

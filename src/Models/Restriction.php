@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kyrch\Restriction\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Config;
 
 class Restriction extends Model
@@ -24,4 +25,12 @@ class Restriction extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function sanctions(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Sanction::class,
+            config('restriction.table_names.sanction_restriction'),
+        );
+    }
 }

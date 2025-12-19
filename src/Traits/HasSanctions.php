@@ -74,6 +74,6 @@ trait HasSanctions
             return $sanctions->intersect($this->sanctions)->filter(fn (Sanction $sanction) => $this->checkExpiration($sanction))->isNotEmpty();
         }
 
-        throw new TypeError('Unexpected type for $sanctions parameter');
+        throw new TypeError("Unexpected type for $sanctions parameter: ".gettype($sanctions));
     }
 }

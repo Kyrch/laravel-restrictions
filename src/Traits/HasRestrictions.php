@@ -81,7 +81,7 @@ trait HasRestrictions
 
     public function isRestrictedViaSanction(string $ability): bool
     {
-        return $this->hasSanction(
+        return $this->hasSanctionNotExpired(
             config('restriction.models.restriction')::query()->firstWhere('name', $ability)->sanctions
         );
     }

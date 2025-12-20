@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kyrch\Prohibition\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Config;
 
 class CreateSanctionCommand extends Command
 {
@@ -28,6 +29,6 @@ class CreateSanctionCommand extends Command
      */
     public function handle(): void
     {
-        config('prohibition.models.sanction')::findOrCreate($this->argument('name'));
+        Config::string('prohibition.models.sanction')::findOrCreate($this->argument('name'));
     }
 }

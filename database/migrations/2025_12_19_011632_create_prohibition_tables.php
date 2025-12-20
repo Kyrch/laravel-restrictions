@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
     public function up(): void
     {
-        $tableNames = config('prohibition.table_names');
+        /** @var array<string, string> $tableNames */
+        $tableNames = Config::array('prohibition.table_names');
 
         Schema::create($tableNames['prohibition'], function (Blueprint $table): void {
             $table->id();

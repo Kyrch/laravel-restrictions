@@ -25,7 +25,7 @@ class ModelSanction extends Pivot
     {
         parent::__construct($attributes);
 
-        $this->setTable(Config::get('prohibition.table_names.model_sanctions'));
+        $this->setTable(Config::string('prohibition.table_names.model_sanctions'));
     }
 
     /**

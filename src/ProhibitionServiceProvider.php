@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Kyrch\Prohibition;
 
-use Kyrch\Prohibition\Commands\CreateProhibitionCommand;
-use Kyrch\Prohibition\Commands\CreateSanctionCommand;
+use Kyrch\Prohibition\Console\Commands\CreateProhibitionCommand;
+use Kyrch\Prohibition\Console\Commands\CreateSanctionCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 

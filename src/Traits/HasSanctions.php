@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
-use InvalidArgumentException;
 use Kyrch\Prohibition\Events\ModelSanctionTriggered;
+use Kyrch\Prohibition\Exceptions\SanctionDoesNotExist;
 use Kyrch\Prohibition\Models\Sanction;
 use TypeError;
 
@@ -37,11 +37,13 @@ trait HasSanctions
         ?string $reason = null,
         ?Model $moderator = null,
     ): void {
-        if (is_string($sanction)) {
-            $sanction = config('prohibition.models.sanction')::query()->firstWhere('name', $sanction);
-        }
+        if (is_string($sanctionName = $sanction)) {
+            $sanction = config('prohibition.models.sanction')::query()->firstWhere('name', $sanctionName);
 
-        throw_if($sanction === null, InvalidArgumentException::class, "Sanction with name '{$sanction}' does not exist.");
+            if ($sanction === null) {
+                throw SanctionDoesNotExist::name($sanctionName);
+            }
+        }
 
         $this->sanctions()->attach($sanction, [
             'moderator_type' => $moderator instanceof Model ? Relation::getMorphAlias($moderator::class) : null,

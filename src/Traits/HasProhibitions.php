@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use InvalidArgumentException;
+use Illuminate\Support\Facades\Config;
 use Kyrch\Prohibition\Events\ModelProhibitionTriggered;
+use Kyrch\Prohibition\Exceptions\ProhibitionDoesNotExist;
 use Kyrch\Prohibition\Models\Prohibition;
 use Kyrch\Prohibition\Models\Sanction;
 
@@ -22,9 +23,9 @@ trait HasProhibitions
     public function prohibitions(): MorphToMany
     {
         return $this->morphToMany(
-            config('prohibition.models.prohibition'),
+            Config::string('prohibition.models.prohibition'),
             'model',
-            config('prohibition.table_names.model_prohibitions'),
+            Config::string('prohibition.table_names.model_prohibitions'),
             'model_id',
         );
     }
@@ -35,11 +36,13 @@ trait HasProhibitions
         ?string $reason = null,
         ?Model $moderator = null,
     ): void {
-        if (is_string($prohibition)) {
-            $prohibition = config('prohibition.models.prohibition')::query()->firstWhere('name', $prohibition);
-        }
+        if (is_string($prohibitionName = $prohibition)) {
+            $prohibition = Config::string('prohibition.models.prohibition')::query()->firstWhere('name', $prohibitionName);
 
-        throw_if($prohibition === null, InvalidArgumentException::class, "Prohibition with name '{$prohibition}' does not exist.");
+            if ($prohibition === null) {
+                throw ProhibitionDoesNotExist::name($prohibitionName);
+            }
+        }
 
         $this->prohibitions()->attach($prohibition, [
             'moderator_type' => $moderator instanceof Model ? Relation::getMorphAlias($moderator::class) : null,
@@ -48,7 +51,7 @@ trait HasProhibitions
             'reason' => $reason,
         ]);
 
-        if (config('prohibition.events_enabled')) {
+        if (Config::boolean('prohibition.events_enabled')) {
             event(new ModelProhibitionTriggered($this->getModel(), $prohibition));
         }
     }

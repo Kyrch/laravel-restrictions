@@ -54,12 +54,12 @@ test('expires_at null means permanent prohibition', function (): void {
     expect($this->testUser->isProhibitedFrom('prohibition'))->toBeTrue();
 });
 
-test('dispatches model prohibition triggered', function () {
+test('dispatches model prohibition triggered', function (): void {
     $this->testUser->prohibit('prohibition');
 
     Event::assertDispatched(ModelProhibitionTriggered::class);
 });
 
-test('throws prohibition does not exist', function () {
+test('throws prohibition does not exist', function (): void {
     $this->testUser->prohibit('non-existing-prohibition');
 })->throws(ProhibitionDoesNotExist::class);

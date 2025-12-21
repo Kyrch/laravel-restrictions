@@ -30,7 +30,8 @@ trait HasSanctions
             'model_id',
         )
             ->using(config('prohibition.models.model_sanction'))
-            ->withPivot(['expires_at', 'moderator_type', 'moderator_id', 'reason']);
+            ->withPivot(['expires_at', 'moderator_type', 'moderator_id', 'reason'])
+            ->withTimestamps();
     }
 
     public function applySanction(

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\Config\RectorConfig;
+use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
 use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use RectorLaravel\Rector\Empty_\EmptyToBlankAndFilledFuncRector;
@@ -50,6 +51,7 @@ return RectorConfig::configure()
         DisallowedEmptyRuleFixerRector::class,
         DispatchToHelperFunctionsRector::class,
         ConvertEnumerableToArrayToAllRector::class,
+        ReturnBinaryOrToEarlyReturnRector::class,
     ])
     ->withPreparedSets(
         deadCode: true,

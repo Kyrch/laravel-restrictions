@@ -52,12 +52,12 @@ test('expires_at null means permanent sanction', function (): void {
     expect($this->testUser->hasSanctionNotExpired('sanction'))->toBeTrue();
 });
 
-test('dispatches model prohibition triggered', function () {
+test('dispatches model prohibition triggered', function (): void {
     $this->testUser->applySanction('sanction');
 
     Event::assertDispatched(ModelSanctionTriggered::class);
 });
 
-test('throws sanction does not exist', function () {
+test('throws sanction does not exist', function (): void {
     $this->testUser->applySanction('non-existing-sanction');
 })->throws(SanctionDoesNotExist::class);

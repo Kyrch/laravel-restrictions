@@ -29,7 +29,8 @@ trait HasProhibitions
             'model_id',
         )
             ->using(Config::string('prohibition.models.model_prohibition'))
-            ->withPivot(['expires_at', 'moderator_type', 'moderator_id', 'reason']);
+            ->withPivot(['expires_at', 'moderator_type', 'moderator_id', 'reason'])
+            ->withTimestamps();
     }
 
     public function prohibit(
@@ -60,11 +61,7 @@ trait HasProhibitions
 
     public function isProhibitedFrom(string $ability): bool
     {
-        if ($this->isDirectlyProhibitedFrom($ability)) {
-            return true;
-        }
-
-        return (bool) $this->isProhibitedViaSanction($ability);
+        return $this->isDirectlyProhibitedFrom($ability) || $this->isProhibitedViaSanction($ability);
     }
 
     public function isDirectlyProhibitedFrom(string $ability): bool
@@ -73,11 +70,9 @@ trait HasProhibitions
             ->where('name', $ability)
             ->first();
 
-        if ($prohibition) {
-            return $this->checkExpiration($prohibition);
-        }
-
-        return false;
+        return $prohibition
+            ? $this->checkExpiration($prohibition)
+            : false;
     }
 
     public function isProhibitedViaSanction(string $ability): bool

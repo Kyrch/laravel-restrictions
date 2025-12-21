@@ -27,6 +27,12 @@ test('user is not prohibited from', function (): void {
     expect($this->testUser->isProhibitedFrom('prohibition'))->toBeFalse();
 });
 
+test('prohibition expired', function (): void {
+    $this->testUser->prohibit('prohibition', Date::now()->subDays(fake()->numberBetween(1, 10)));
+
+    expect($this->testUser->isProhibitedFrom('prohibition'))->toBeFalse();
+});
+
 test('user is directly prohibited from', function (): void {
     $this->testUser->prohibit('prohibition', Date::now()->addDays(fake()->numberBetween(1, 10)));
 

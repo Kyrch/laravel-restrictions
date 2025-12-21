@@ -27,6 +27,12 @@ test('user is not sanctioned', function (): void {
     expect($this->testUser->hasSanctionNotExpired('sanction'))->toBeFalse();
 });
 
+test('sanction expired', function (): void {
+    $this->testUser->applySanction('sanction', Date::now()->subDays(fake()->numberBetween(1, 10)));
+
+    expect($this->testUser->hasSanctionNotExpired('prohibition'))->toBeFalse();
+});
+
 test('user is prohibited via sanction', function (): void {
     Sanction::query()->first()->prohibitions()->attach(
         Prohibition::query()->first()

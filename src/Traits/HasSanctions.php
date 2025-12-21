@@ -28,7 +28,9 @@ trait HasSanctions
             'model',
             config('prohibition.table_names.model_sanctions'),
             'model_id',
-        );
+        )
+            ->using(config('prohibition.models.model_sanction'))
+            ->withPivot(['expires_at', 'moderator_type', 'moderator_id', 'reason']);
     }
 
     public function applySanction(

@@ -27,7 +27,9 @@ trait HasProhibitions
             'model',
             Config::string('prohibition.table_names.model_prohibitions'),
             'model_id',
-        );
+        )
+            ->using(Config::string('prohibition.models.model_prohibition'))
+            ->withPivot(['expires_at', 'moderator_type', 'moderator_id', 'reason']);
     }
 
     public function prohibit(

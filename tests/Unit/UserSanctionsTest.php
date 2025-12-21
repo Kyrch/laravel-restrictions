@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Event;
+use Kyrch\Prohibition\Events\ModelSanctionTriggered;
+use Kyrch\Prohibition\Exceptions\SanctionDoesNotExist;
 use Kyrch\Prohibition\Models\Prohibition;
 use Kyrch\Prohibition\Models\Sanction;
 
@@ -48,3 +51,13 @@ test('expires_at null means permanent sanction', function (): void {
 
     expect($this->testUser->hasSanctionNotExpired('sanction'))->toBeTrue();
 });
+
+test('dispatches model prohibition triggered', function () {
+    $this->testUser->applySanction('sanction');
+
+    Event::assertDispatched(ModelSanctionTriggered::class);
+});
+
+test('throws sanction does not exist', function () {
+    $this->testUser->applySanction('non-existing-sanction');
+})->throws(SanctionDoesNotExist::class);

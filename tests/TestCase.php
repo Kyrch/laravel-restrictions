@@ -7,6 +7,7 @@ namespace Kyrch\Prohibition\Tests;
 use Illuminate\Database\ConnectionResolverInterface;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Event;
 use Kyrch\Prohibition\ProhibitionServiceProvider;
 use Kyrch\Prohibition\Tests\TestModels\User;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -20,6 +21,8 @@ class TestCase extends Orchestra
     protected function setUp(): void
     {
         parent::setUp();
+
+        Event::fake();
 
         if (! self::$migration) {
             $this->prepareMigration();
